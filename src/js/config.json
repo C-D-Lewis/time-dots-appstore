@@ -1,0 +1,47 @@
+[
+  { 
+    "type": "heading", 
+    "defaultValue": "Time Dots Configuration" 
+  },
+  {
+    "type": "text", 
+    "defaultValue": "(Color watches only)"
+  },
+  {
+    "type": "section",
+    "items": [
+      {
+        "type": "heading",
+        "defaultValue": "Colors"
+      },
+      {
+        "type": "color",
+        "messageKey": "ColorTypeBackground",
+        "label": "Background",
+        "defaultValue": "0000aa"
+      },
+      {
+        "type": "color",
+        "messageKey": "ColorTypeRing",
+        "label": "Ring",
+        "defaultValue": "0055ff"
+      },
+      {
+        "type": "color",
+        "messageKey": "ColorTypeDotActive",
+        "label": "Dot (Active)",
+        "defaultValue": "ffffff"
+      },
+      {
+        "type": "color",
+        "messageKey": "ColorTypeDotInactive",
+        "label": "Dot (Inactive)",
+        "defaultValue": "000000"
+      }
+    ]
+  },
+  {
+    "type": "submit",
+    "defaultValue": "Save"
+  }
+]
