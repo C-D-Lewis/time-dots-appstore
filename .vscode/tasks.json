@@ -40,6 +40,14 @@
         "install", "--cloudpebble"  
       ],
       "isTestCommand": true
+    },
+    {
+      "taskName": "emu-app-config",
+      "suppressTaskName": true,
+      "args": [
+        "emu-app-config"  
+      ],
+      "isTestCommand": true
     }
   ]
 }
