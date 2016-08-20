@@ -21,9 +21,9 @@ void data_init() {
     data_set_color(ColorTypeDotActive, (GColor) { .argb = persist_read_int(ColorTypeDotActive) });
   }
 
-  const int persist_key_v_1_2 = 432987;
-  if(!persist_exists(persist_key_v_1_2)) {
-    persist_write_bool(persist_key_v_1_2, false);
+  const int persist_key_v_1_3 = 432987;
+  if(!persist_exists(persist_key_v_1_3)) {
+    persist_write_bool(persist_key_v_1_3, false);
 
     data_set_feature(FeatureKeyShowMinutes, true);
     data_set_feature(FeatureKeyBTAlert, true);
