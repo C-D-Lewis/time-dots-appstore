@@ -1,6 +1,7 @@
 #include "data.h"
 
 static GColor s_colors[ColorTypeCount];
+static bool s_show_minutes, s_bt_alert;
 
 void data_init() {
   const int persist_key_first_time = 54786;
@@ -18,6 +19,17 @@ void data_init() {
     data_set_color(ColorTypeRing, (GColor) { .argb = persist_read_int(ColorTypeRing) });
     data_set_color(ColorTypeDotInactive, (GColor) { .argb = persist_read_int(ColorTypeDotInactive) });
     data_set_color(ColorTypeDotActive, (GColor) { .argb = persist_read_int(ColorTypeDotActive) });
+  }
+
+  const int persist_key_v_1_2 = 432987;
+  if(!persist_exists(persist_key_v_1_2)) {
+    persist_write_bool(persist_key_v_1_2, false);
+
+    data_set_feature(FeatureKeyShowMinutes, true);
+    data_set_feature(FeatureKeyBTAlert, true);
+  } else {
+    data_set_feature(FeatureKeyShowMinutes, persist_read_bool(FeatureKeyShowMinutes));
+    data_set_feature(FeatureKeyBTAlert, persist_read_bool(FeatureKeyBTAlert));
   }
 }
 
@@ -43,4 +55,25 @@ GColor data_get_color(ColorType type) {
     default: return GColorBlack;
   }
 #endif
+}
+
+void data_set_feature(FeatureKey key, bool b) {
+  switch(key) {
+    case FeatureKeyShowMinutes:
+      s_show_minutes = b;
+      break;
+    case FeatureKeyBTAlert:
+      s_bt_alert = b;
+      break;
+    default: break;
+  }
+  persist_write_bool(key, b);
+}
+
+bool data_get_feature(FeatureKey key) {
+  switch(key) {
+    case FeatureKeyShowMinutes: return s_show_minutes;
+    case FeatureKeyBTAlert:     return s_bt_alert;
+    default: return false;
+  }
 }
