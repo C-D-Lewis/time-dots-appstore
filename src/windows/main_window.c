@@ -29,8 +29,8 @@ static void layer_update_proc(Layer *layer, GContext *ctx) {
   GRect frame = grect_inset(bounds, GEdgeInsets(4 * INSET));
 
   // 12 hours only, with a minimum size
-  s_hours -= (s_hours > 12) ? 12 : 0;
-
+  s_hours -= (s_hours >= 12) ? 12 : 0;
+  
   // Minutes are expanding circle arc
   if(data_get_feature(FeatureKeyShowMinutes)) {
     int minute_angle = get_angle_for_minute(s_minutes);
@@ -88,14 +88,14 @@ static void window_unload(Window *window) {
 
 void main_window_push() {
   s_window = window_create();
-  window_set_background_color(s_window, data_get_color(ColorTypeBackground));
   window_set_window_handlers(s_window, (WindowHandlers) {
     .load = window_load,
     .unload = window_unload,
   });
   window_stack_push(s_window, true);
 
-  tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
+  main_window_reload_config();
+
   time_t now = time(NULL);
   struct tm *time_now = localtime(&now);
   tick_handler(time_now, MINUTE_UNIT);
@@ -111,4 +111,12 @@ void main_window_push() {
 void main_window_reload_config() {
   window_set_background_color(s_window, data_get_color(ColorTypeBackground));
   layer_mark_dirty(s_canvas);
+
+  tick_timer_service_unsubscribe();
+  if(data_get_feature(FeatureKeyShowMinutes)) {
+    tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
+  } else {
+    // Save power!
+    tick_timer_service_subscribe(HOUR_UNIT, tick_handler);
+  }
 }

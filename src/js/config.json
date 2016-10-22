@@ -13,7 +13,7 @@
       {
         "type": "toggle",
         "defaultValue": true,
-        "label": "Minutes ring ",
+        "label": "Minutes ring (saves power if off)",
         "messageKey": "ShowMinutes"
       },
       {
